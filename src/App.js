@@ -1,6 +1,7 @@
 import './App.css';
 import UserList from './component/UserList';
 import StoreList from './component/StoreList';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (

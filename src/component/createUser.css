@@ -1,0 +1,19 @@
+.createName {
+    width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(#67B26F,#4ca2cd);
+    border: 1px solid white;
+    border-radius: 10px;
+}
+
+.mb-4{
+    background: linear-gradient(#43C6AC,#F8FFAE);
+    color: white
+}
+
+.mb-3{
+    background: linear-gradient(#43C6AC,#F8FFAE,#43C6AC);
+}

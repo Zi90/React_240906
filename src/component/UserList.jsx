@@ -1,6 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import User from './User';
 import CreateUser from './CreateUser';
+import { Container, Card, ListGroup } from 'react-bootstrap';
 
 const UserList = () => {
 
@@ -93,24 +94,43 @@ const UserList = () => {
         // user.id가 파라미터의 id와 일치하면 active의 상태를 반전시켜 줌.
         setUsers(users.map(u=>
             u.id === id ? { ...u, active: !u.active} : u
-        ))
+        ));
     }
 
+    const countActiveUser = (users) => {
+        // user.active가 true인 사용자를 세어서 리턴
+        return (users.filter(user => user.active).length);
+    }
+
+    const count = useMemo( () => countActiveUser(users), [users])
+
     return (
-        <div className='userList'>
-            {/* 컴포넌트에서 데이터를 하위 컴포넌트에게 전달하는 방법 = props */}
-            {/* {
-                users.map(u=>(
-                    <User user={u} key={u.id}/>
-                ))
-            } */}
-            <CreateUser username={username} email={email} onChange={onChange} onCreate={onCreate}/>
-            {
-                users.map((u)=>(
-                    <User user={u} key={u.id} onRemove={onRemove} onToggle={onToggle}/>
-                ))
-            }
-        </div>
+        <Container className='my-4'>
+            <Card className='mb-4'>
+                <Card.Header as="h5">Create New User</Card.Header>
+                <Card.Body>
+                    <CreateUser
+                        username={username}
+                        email={email}
+                        onChange={onChange}
+                        onCreate={onCreate}
+                    />
+                </Card.Body>
+            </Card>
+            <Card  className='mb-3'>
+                <Card.Header as="h5">User List</Card.Header>
+                <ListGroup variant="flush">
+                    {users.map(u => (
+                        <ListGroup.Item key={u.id}>
+                            <User user={u} onRemove={onRemove} onToggle={onToggle} />
+                        </ListGroup.Item>
+                    ))}
+                </ListGroup>
+                <Card.Footer className='text-muted'>
+                    Completed Users: {count}
+                </Card.Footer>
+            </Card>
+        </Container>
     );
 };
 
